@@ -147,3 +147,23 @@ You can change the parameters that are related to the detection by adding a new 
 * **`yolo_model/detection_classes/names`** (array of strings)
 
     Detection names of the network used by the cfg and weights file inside `darkned_ros/yolo_network_config/`.
+
+## Configuration in Pepper robot
+
+Compress your compiled YOLO_ws in Pepper virtual machine with `tar czf YOLO_ws.tar.gz YOLO_ws`.
+
+From computer terminal launch something like `scp -P 2222 nao@127.0.0.1:/home/nao/YOLO_ws.tar.gz /home/asceta/` to get YOLO_ws for Pepper.
+
+When connected to Pepper pass your tar file to the robot with `scp /home/asceta/YOLO_ws.tar.gz nao@10.42.0.39:/home/nao/`
+
+De-compress with: `tar czf YOLO_ws.tar.gz YOLO_ws`.
+
+Inside Pepper launch its `bring_up`:
+
+     roslaunch maqui_bringup maqui.launch
+
+In other terminal launch `darknet_ros`:
+
+     cd ~/YOLO_ws
+     source devel/setup.bash
+     roslaunch darknet_ros darknet_ros.launch  
