@@ -8,7 +8,7 @@
   <arg name="yolo_weights_path"          default="$(find darknet_ros)/yolo_network_config/weights"/>
   <arg name="yolo_config_path"           default="$(find darknet_ros)/yolo_network_config/cfg"/>
 
-  <!-- Load parameters -->
+  <!-- Load parameters [Change tiny_yolo_voc.yalm to modify .cfg .weights and classes] -->
   <rosparam command="load" ns="darknet_ros" file="$(find darknet_ros)/config/ros.yaml"/>
   <rosparam command="load" ns="darknet_ros" file="$(find darknet_ros)/config/tiny_yolo_voc.yaml"/>
 
