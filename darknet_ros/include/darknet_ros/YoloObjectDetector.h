@@ -142,6 +142,7 @@ class YoloObjectDetector
   bool publishDetectionImage(const cv::Mat& detectionImage);
 
   //! Typedefs.
+  //[ADDED] std::shared_ptr must be changed to boost::shared_ptr
   typedef actionlib::SimpleActionServer<darknet_ros_msgs::CheckForObjectsAction> CheckForObjectsActionServer;
   typedef boost::shared_ptr<CheckForObjectsActionServer> CheckForObjectsActionServerPtr;
 
