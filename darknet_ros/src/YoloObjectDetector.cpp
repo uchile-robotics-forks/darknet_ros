@@ -10,7 +10,7 @@
 #include "darknet_ros/YoloObjectDetector.h"
 
 // Check for xServer
-#include <X11/Xlib.h>
+//#include <X11/Xlib.h>
 
 #ifdef DARKNET_FILE_PATH
 std::string darknetFilePath_ = DARKNET_FILE_PATH;
@@ -59,14 +59,14 @@ bool YoloObjectDetector::readParameters() {
   nodeHandle_.param("image_view/enable_console_output", enableConsoleOutput_, false);
 
   // Check if Xserver is running on Linux.
-  if(XOpenDisplay(NULL)) {
+  //if(XOpenDisplay(NULL)) {
     // Do nothing!
-    ROS_INFO("[YoloObjectDetector] Xserver is running.");
-  }
-  else {
-    ROS_INFO("[YoloObjectDetector] Xserver is not running.");
-    viewImage_ = false;
-  }
+    //ROS_INFO("[YoloObjectDetector] Xserver is running.");
+  //}
+  //else {
+    //ROS_INFO("[YoloObjectDetector] Xserver is not running.");
+    //viewImage_ = false;
+  //}
 
   if(!viewImage_) {
     darknetImageViewer_ = false;

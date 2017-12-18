@@ -102,11 +102,11 @@ void *detect_in_thread(void *ptr) {
     error("Last layer must produce detections\n");
   }
   if (nms > 0) do_nms_obj(boxes, probs, l.w*l.h*l.n, l.classes, nms);
-  //printf("\033[2J");
-  //printf("\033[1;1H");
-  if (enable_console_output) {
-    printf("\nFPS:%.1f\n",fps);
-  }
+  printf("\033[2J");
+  printf("\033[1;1H");
+  //if (enable_console_output) {
+  printf("\nFPS:%.1f\n",fps);
+  //}
 
   if(view_image)
   {
@@ -250,7 +250,7 @@ extern "C" darknet_ros::RosBox_ *demo_yolo() {
       det_s = in_s;
     }
 
-    if(view_image)
+    /*if(view_image)
     {
       cvNamedWindow("YOLO_V2", CV_WINDOW_NORMAL);
       if(full_screen){
@@ -259,7 +259,7 @@ extern "C" darknet_ros::RosBox_ *demo_yolo() {
         cvMoveWindow("YOLO_V2", 0, 0);
         cvResizeWindow("YOLO_V2", 1352, 1013);
       }
-    }
+    }*/
   } else {
     ++count;
     fetch_in_thread(0);
@@ -268,11 +268,11 @@ extern "C" darknet_ros::RosBox_ *demo_yolo() {
 
     if(pthread_create(&fetch_thread, 0, fetch_in_thread, 0)) error("Thread creation failed");
     if(pthread_create(&detect_thread, 0, detect_in_thread, 0)) error("Thread creation failed");\
-    if(view_image)
+    /*if(view_image)
     {
       show_image(disp, "YOLO_V2");
       cvWaitKey(wait_key_delay);
-    }
+    }*/
     pthread_join(fetch_thread, 0);
     pthread_join(detect_thread, 0);
 

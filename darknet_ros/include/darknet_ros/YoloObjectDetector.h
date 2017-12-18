@@ -143,7 +143,7 @@ class YoloObjectDetector
 
   //! Typedefs.
   typedef actionlib::SimpleActionServer<darknet_ros_msgs::CheckForObjectsAction> CheckForObjectsActionServer;
-  typedef std::shared_ptr<CheckForObjectsActionServer> CheckForObjectsActionServerPtr;
+  typedef boost::shared_ptr<CheckForObjectsActionServer> CheckForObjectsActionServerPtr;
 
   //! ROS node handle.
   ros::NodeHandle nodeHandle_;
