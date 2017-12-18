@@ -71,7 +71,7 @@ Then in the launch file you have to point to your new config file in the line:
 
     <rosparam command="load" ns="darknet_ros" file="$(find darknet_ros)/config/your_config_file.yaml"/>
 
-By default tiny-yolo-voc.yalm is set, and there is cfg and yalm to an arquitecture that it's lighter than yolo, and can detectect only persons if trained.
+By default tiny-yolo-voc.yalm is set, and there is a cfg and a yalm to an arquitecture that it's lighter than yolo, and can detectect only person class if trained.
 
 
 ## Basic Usage
@@ -93,8 +93,8 @@ You can change the names and other parameters of the publishers, subscribers and
 * **`/camera_reading`** ([sensor_msgs/Image])
 
     The camera measurements.
-    This topic can hear to the camera of Pepper, by setting: 'topic: /maqui/camera/front/image_raw'
-    or a webcam from a computer by setting: 'topic: /usb_cam/image_raw'
+    This topic can hear to the camera of Pepper, by setting: `topic: /maqui/camera/front/image_raw`
+    or a webcam from a computer by setting: `topic: /usb_cam/image_raw`
 
 #### Published Topics
 
@@ -122,7 +122,7 @@ You can change the parameters that are related to the detection by adding a new 
 
 * **`image_view/enable_opencv`** (bool)
 
-    Enable or disable the open cv view of the detection image including the bounding boxes.
+    Keep it true, OpenCV imshow is commented.
 
 * **`image_view/use_darknet`** (bool)
 
