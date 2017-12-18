@@ -36,12 +36,6 @@ To maximize performance, make sure to build in *Release* mode. You can specify t
 
     catkin_make -DCMAKE_BUILD_TYPE=Release
 
-using the [Catkin Command Line Tools](http://catkin-tools.readthedocs.io/en/latest/index.html#)
-
-    catkin build darknet_ros -DCMAKE_BUILD_TYPE=Release
-
-DOESN'T work in Pepper.
-
 ### Download weights
 
 The tiny-yolo-voc.weights are downloaded automatically in the CMakeLists.txt file. If you need to download weights, go into the weights folder and download the two pre-trained weights from the VOC data set:
