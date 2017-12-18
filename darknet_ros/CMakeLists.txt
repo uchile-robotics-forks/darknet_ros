@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.11)
+cmake_minimum_required(VERSION 2.8.11) ####[ADDED] version 2.8.11 is required (must be changed also in src/CMakeLists.txt)
 project(darknet_ros)
 
 ####[ADDED] COMMENTS ADDED FOR PEPPER WILL HAVE NEXT PREFACE: '####[ADDED]'

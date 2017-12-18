@@ -4,12 +4,16 @@
  *  Created on: Dec 19, 2016
  *      Author: Marko Bjelonic
  *   Institute: ETH Zurich, Robotic Systems Lab
+ * Modified by: Esteban Reyes
+ *
+ * COMMENT OF MODIFICATIONS FOR PEPPER WILL HAVE PREFIX '//[ADDED]'
  */
 
 // yolo object detector
 #include "darknet_ros/YoloObjectDetector.h"
 
 // Check for xServer
+//[ADDED] no X11 on compilation so commented
 //#include <X11/Xlib.h>
 
 #ifdef DARKNET_FILE_PATH
@@ -58,6 +62,7 @@ bool YoloObjectDetector::readParameters() {
   nodeHandle_.param("image_view/wait_key_delay", waitKeyDelay_, 3);
   nodeHandle_.param("image_view/enable_console_output", enableConsoleOutput_, false);
 
+  //[ADDED] Commented due lack of X11
   // Check if Xserver is running on Linux.
   //if(XOpenDisplay(NULL)) {
     // Do nothing!
