@@ -101,6 +101,7 @@ void *detect_in_thread(void *ptr) {
   } else {
     error("Last layer must produce detections\n");
   }
+  //[ADDED] modifications to print fps
   if (nms > 0) do_nms_obj(boxes, probs, l.w*l.h*l.n, l.classes, nms);
   printf("\033[2J");
   printf("\033[1;1H");
@@ -249,7 +250,7 @@ extern "C" darknet_ros::RosBox_ *demo_yolo() {
       det = in;
       det_s = in_s;
     }
-
+    //[ADDED] commented to avoid OpenGL conflicts
     /*if(view_image)
     {
       cvNamedWindow("YOLO_V2", CV_WINDOW_NORMAL);
@@ -268,6 +269,7 @@ extern "C" darknet_ros::RosBox_ *demo_yolo() {
 
     if(pthread_create(&fetch_thread, 0, fetch_in_thread, 0)) error("Thread creation failed");
     if(pthread_create(&detect_thread, 0, detect_in_thread, 0)) error("Thread creation failed");\
+    //[ADDED] commented to avoid OpenGL conflicts
     /*if(view_image)
     {
       show_image(disp, "YOLO_V2");
