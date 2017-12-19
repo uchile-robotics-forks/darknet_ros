@@ -54,7 +54,7 @@ Install these packages on your Jetson:
 
 ### Set CUDA paths
 
-If you try to compile now the next error will raise:
+If you try to compile now, the next error will raise:
 
     /usr/bin/ld: cannot find -lcudart
 
@@ -200,7 +200,8 @@ You can change the parameters that are related to the detection by adding a new 
 
 ## Configuration of Jetson with Pepper robot (through a pc connected to Pepper via wi-fi)
 
-![alt tag](https://www.dropbox.com/s/hfc20214x0swrjs/pnj.png?dl=0 "Pepper via wi-fi to notebook, which is connected through ethernet to Jetson.")
+![Pepper via wi-fi to notebook, which is connected through ethernet to Jetson.](darknet_ros/doc/pnj.png)
+
 
 After configuring 'ros.yalm' camera reading topic to listen to Pepper's camera, create a ethernet connection with a 'Shared to other computers' method (options found in IPv4 Settings). Then connect Jetson card via ethernet to the computer connected to Pepper. 
 
@@ -234,5 +235,5 @@ After, from Jetson card you can launch YOLO
 
 And you should se something like:
 
-![alt tag](https://www.dropbox.com/s/dwkicoxz06aknvh/yo.png?dl=0 "YOLO running on Jetson with Pepper camera.")
+![YOLO running on Jetson with Pepper camera.](darknet_ros/doc/dog.png)
 
