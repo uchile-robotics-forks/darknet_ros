@@ -235,5 +235,5 @@ After, from Jetson card you can launch YOLO
 
 And you should se something like:
 
-![YOLO running on Jetson with Pepper camera.](darknet_ros/doc/dog.png)
+![YOLO running on Jetson with Pepper camera.](darknet_ros/doc/yo.png)
 
