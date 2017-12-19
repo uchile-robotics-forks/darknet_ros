@@ -24,6 +24,16 @@ This software is built on the Robotic Operating System ([ROS]), which needs to b
 - [OpenCV](http://opencv.org/) (computer vision library),
 - [boost](http://www.boost.org/) (c++ library),
 
+### Packages
+
+Make sure to have `python-empy` package installed, by executing:
+
+    sudo pip install empy
+
+Otherwise, the next error will rise:
+
+    ImportError: No module named 'em'
+
 ### Building
 
 [![Build Status](https://ci.leggedrobotics.com/buildStatus/icon?job=github_leggedrobotics/darknet_ros/master)](https://ci.leggedrobotics.com/job/github_leggedrobotics/job/darknet_ros/job/master/)
