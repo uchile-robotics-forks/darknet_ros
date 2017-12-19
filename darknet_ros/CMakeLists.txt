@@ -1,8 +1,12 @@
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 2.8.12) 
 project(darknet_ros)
 
+####[ADDED] COMMENTS ADDED FOR PEPPER WILL HAVE NEXT PREFACE: '####[ADDED]'
+
+
+####[ADDED] flags of c++11 are commented
 # Set c++11 cmake flags
-set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
+#set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
 
 # Define path of darknet folder here.
 find_path(DARKNET_PATH
@@ -26,8 +30,9 @@ if (CUDA_FOUND)
     -gencode arch=compute_35,code=sm_35
     -gencode arch=compute_50,code=[sm_50,compute_50]
     -gencode arch=compute_52,code=[sm_52,compute_52]
-    -gencode arch=compute_61,code=sm_61
-    -gencode arch=compute_62,code=sm_62
+####[ADDED] for gpu use these must be commented
+#    -gencode arch=compute_61,code=sm_61
+#    -gencode arch=compute_62,code=sm_62
   )
   add_definitions(-DGPU)
 else()
@@ -90,7 +95,7 @@ include_directories(
 if (CUDA_FOUND)
 
   link_directories(
-    /usr/local/cuda/lib64
+    /usr/local/cuda-6.5/lib64
   )
 
   cuda_add_library(${PROJECT_NAME}_lib
@@ -230,6 +235,8 @@ install(
   FILES_MATCHING PATTERN "*.h"
 )
 
+####[ADDED] It's recommended to previously download tiny-yolo-voc.weights, adn put them in correct directory
+
 # Download tiny-yolo-voc.weights
 set(PATH "${CMAKE_CURRENT_SOURCE_DIR}/yolo_network_config/weights")
 set(FILE "${PATH}/tiny-yolo-voc.weights")
@@ -244,14 +251,15 @@ endif()
 #############
 
 if(CATKIN_ENABLE_TESTING)
+  ####[ADDED] yolo-voc weights won't be downloaded (too haeavy) 
   # Download yolo-voc.weights
-  set(PATH "${CMAKE_CURRENT_SOURCE_DIR}/yolo_network_config/weights")
-  set(FILE "${PATH}/yolo-voc.weights")
-  message(STATUS "Checking and downloading yolo-voc.weights if needed ...")
-  if (NOT EXISTS "${FILE}")
-    message(STATUS "... file does not exist. Downloading now ...")
-    execute_process(COMMAND wget http://pjreddie.com/media/files/yolo-voc.weights -P ${PATH})
-  endif()
+  #set(PATH "${CMAKE_CURRENT_SOURCE_DIR}/yolo_network_config/weights")
+  #set(FILE "${PATH}/yolo-voc.weights")
+  #message(STATUS "Checking and downloading yolo-voc.weights if needed ...")
+  #if (NOT EXISTS "${FILE}")
+  #  message(STATUS "... file does not exist. Downloading now ...")
+  #  execute_process(COMMAND wget http://pjreddie.com/media/files/yolo-voc.weights -P ${PATH})
+  #endif()
 
   find_package(rostest REQUIRED)
 
