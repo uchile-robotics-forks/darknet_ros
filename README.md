@@ -1,11 +1,14 @@
-# YOLO v2 ROS: Real-Time Object Detection with ROS for Pepper
+# YOLO v2 for ROS: Real-Time Object Detection for ROS
 
 ## Overview
 
-This is a ROS package developed for object detection in camera images, modified specifically to work with Pepper robot. This project is based on [YOLO v2 for ROS: Real-Time Object Detection for ROS] of [leggedrobotics](https://github.com/leggedrobotics/darknet_ros), where raw installations for any robot with ROS can be found.
+This is a ROS package developed for object detection in camera images. You only look once (YOLO) is a state-of-the-art, real-time object detection system. In the following ROS package you are able to use YOLO on GPU and CPU. The pre-trained model of the convolutional neural network is able to detect pre-trained classes including the data set from VOC and COCO (e.g. aeroplane, bicycle, bird, boat, bottle, bus, car, cat, chair, cow, dining table, dog, horse, motorbike, person, potted plant, sheep, sofa, train and tv monitor) or you can also create a network with your own detection objects. For more information about YOLO, Darknet, available training data and training YOLO see the following link: [YOLO: Real-Time Object Detection](http://pjreddie.com/darknet/yolo/). Some part of the code is inspired by the work of [pgigioli](https://github.com/pgigioli).
 
-In next paragraphs the original project readme is slightly modified to summarice the work done and how to manage the package.
+The YOLO packages have been tested under ROS Kinetic and Ubuntu 16.04. This is research code, expect that it changes often and any fitness for a particular purpose is disclaimed.
 
+**Author: Marko Bjelonic, marko.bjelonic@mavt.ethz.ch**
+
+**Affiliation: Robotic Systems Lab, ETH Zurich**
 
 
 ## Citing
@@ -16,7 +19,7 @@ The YOLO methods used in this software are described in the paper: [You Only Loo
 
 ### Dependencies
 
-This software is built on the Robotic Operating System ([ROS]), which needs to be [installed](http://wiki.ros.org) first, it also considers that you have the latest Pepper virtual machine (VM) with OpenCV installed. Additionally, YOLO for ROS depends on following software:
+This software is built on the Robotic Operating System ([ROS]), which needs to be [installed](http://wiki.ros.org) first. Additionally, YOLO for ROS depends on following software:
 
 - [OpenCV](http://opencv.org/) (computer vision library),
 - [boost](http://www.boost.org/) (c++ library),
@@ -25,20 +28,31 @@ This software is built on the Robotic Operating System ([ROS]), which needs to b
 
 [![Build Status](https://ci.leggedrobotics.com/buildStatus/icon?job=github_leggedrobotics/darknet_ros/master)](https://ci.leggedrobotics.com/job/github_leggedrobotics/job/darknet_ros/job/master/)
 
-In order to install darknet_ros, clone the latest version from this repository into your catkin workspace, switch to the pepper branch and compile the package using ROS inside the Pepper VM.
+In order to install darknet_ros, clone the latest version from this repository into your catkin workspace and compile the package using ROS.
 
     cd catkin_workspace/src
-    git clone --recursive https://github.com/ReyesDeJong/darknet_ros.git
-    git checkout pepper
+    git clone --recursive git@github.com:leggedrobotics/darknet_ros.git
     cd ../
 
 To maximize performance, make sure to build in *Release* mode. You can specify the build type by setting
 
     catkin_make -DCMAKE_BUILD_TYPE=Release
 
+or using the [Catkin Command Line Tools](http://catkin-tools.readthedocs.io/en/latest/index.html#)
+
+    catkin build darknet_ros -DCMAKE_BUILD_TYPE=Release
+
+Darknet on the CPU is fast (approximately 1.5 seconds on an Intel Core i7-6700HQ CPU @ 2.60GHz × 8) but it's like 500 times faster on GPU! You'll have to have an Nvidia GPU and you'll have to install CUDA. The CMakeLists.txt file automatically detects if you have CUDA installed or not. CUDA is a parallel computing platform and application programming interface (API) model created by Nvidia. If you do not have CUDA on your System the build process will switch to the CPU version of YOLO. If you are compiling with CUDA, you might receive the following build error:
+
+    nvcc fatal : Unsupported gpu architecture 'compute_61'.
+
+This means that you need to check the compute capability (version) of your GPU. You can find a list of supported GPUs in CUDA here: [CUDA - WIKIPEDIA](https://en.wikipedia.org/wiki/CUDA#Supported_GPUs). Simply find the compute capability of your GPU and add it into darknet_ros/CMakeLists.txt. Simply add a similar line like
+
+    -O3 -gencode arch=compute_62,code=sm_62
+
 ### Download weights
 
-The tiny-yolo-voc.weights are downloaded automatically in the CMakeLists.txt file. If you need to download weights, go into the weights folder and download the two pre-trained weights from the VOC data set:
+The yolo-voc.weights and tiny-yolo-voc.weights are downloaded automatically in the CMakeLists.txt file. If you need to download them again, go into the weights folder and download the two pre-trained weights from the VOC data set:
 
     cd catkin_workspace/src/darknet_ros/darknet_ros/yolo_network_config/weights/
     wget http://pjreddie.com/media/files/yolo-voc.weights
@@ -71,8 +85,16 @@ Then in the launch file you have to point to your new config file in the line:
 
     <rosparam command="load" ns="darknet_ros" file="$(find darknet_ros)/config/your_config_file.yaml"/>
 
-By default tiny-yolo-voc.yalm is set, and there is a cfg and a yalm to an arquitecture that it's lighter than yolo, and can detectect only person class if trained.
+### Unit Tests
 
+Run the unit tests using the [Catkin Command Line Tools](http://catkin-tools.readthedocs.io/en/latest/index.html#)
+
+    catkin build darknet_ros --no-deps --verbose --catkin-make-args run_tests
+
+You will see the following two figures popping up :
+
+![Darknet Ros example: Detection image 1](darknet_ros/doc/dog.png)
+![Darknet Ros example: Detection image 2](darknet_ros/doc/person.png)
 
 ## Basic Usage
 
@@ -93,8 +115,6 @@ You can change the names and other parameters of the publishers, subscribers and
 * **`/camera_reading`** ([sensor_msgs/Image])
 
     The camera measurements.
-    This topic can hear to the camera of Pepper, by setting: `topic: /maqui/camera/front/image_raw`
-    or a webcam from a computer by setting: `topic: /usb_cam/image_raw`
 
 #### Published Topics
 
@@ -122,7 +142,7 @@ You can change the parameters that are related to the detection by adding a new 
 
 * **`image_view/enable_opencv`** (bool)
 
-    Keep it true, OpenCV imshow is commented.
+    Enable or disable the open cv view of the detection image including the bounding boxes.
 
 * **`image_view/use_darknet`** (bool)
 
@@ -147,23 +167,3 @@ You can change the parameters that are related to the detection by adding a new 
 * **`yolo_model/detection_classes/names`** (array of strings)
 
     Detection names of the network used by the cfg and weights file inside `darkned_ros/yolo_network_config/`.
-
-## Configuration in Pepper robot
-
-Compress your compiled YOLO_ws in Pepper virtual machine with `tar czf YOLO_ws.tar.gz YOLO_ws`.
-
-From computer terminal launch something like `scp -P 2222 nao@127.0.0.1:/home/nao/YOLO_ws.tar.gz /home/asceta/` to get YOLO_ws for Pepper.
-
-When connected to Pepper pass your tar file to the robot with `scp /home/asceta/YOLO_ws.tar.gz nao@10.42.0.39:/home/nao/`
-
-De-compress with: `tar czf YOLO_ws.tar.gz YOLO_ws`.
-
-Inside Pepper launch its `bring_up`:
-
-     roslaunch maqui_bringup maqui.launch
-
-In other terminal launch `darknet_ros`:
-
-     cd ~/YOLO_ws
-     source devel/setup.bash
-     roslaunch darknet_ros darknet_ros.launch  
