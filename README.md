@@ -179,3 +179,15 @@ You can change the parameters that are related to the detection by adding a new 
 * **`yolo_model/detection_classes/names`** (array of strings)
 
     Detection names of the network used by the cfg and weights file inside `darkned_ros/yolo_network_config/`.
+
+## Camera Launch
+
+Open a terminal and launch:
+ 
+    roslaunch usb_cam usb_cam-test.launch
+
+After changing the topic `/camera_reading` to `/usb_cam/image_raw`, open another terminal and launch:
+
+    roslaunch darknet_ros darknet_ros.launch
+
+    
