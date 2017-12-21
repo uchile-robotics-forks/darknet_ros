@@ -126,6 +126,8 @@ You can change the names and other parameters of the publishers, subscribers and
 
     The camera measurements.
 
+    To listen to the integrated camera of a notebook, or a usb-cam, change this to `topic: /usb_cam/image_raw`
+
 #### Published Topics
 
 * **`object_detector`** ([std_msgs::Int8])
