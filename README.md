@@ -1,5 +1,7 @@
 # YOLO v2 ROS: Real-Time Object Detection with ROS for Pepper
 
+**Warning: avoid `sudo` use**
+
 ## Overview
 
 This is a ROS package developed for object detection in camera images, modified specifically to work with Pepper robot. This project is based on [YOLO v2 for ROS: Real-Time Object Detection for ROS] of [leggedrobotics](https://github.com/leggedrobotics/darknet_ros), where raw installations for any robot with ROS can be found.
