@@ -237,3 +237,5 @@ And you should se something like:
 
 ![YOLO running on Jetson with Pepper camera.](darknet_ros/doc/yo.png)
 
+**Warning: if an error rises when launching darknet_ros, it's probable that yout Jetson is running low on resources. Close every other procces (like web browsers for example) and try again**
+
