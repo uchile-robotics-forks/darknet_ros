@@ -212,7 +212,7 @@ On a terminal in the Jetson card, type the following:
     export ROS_MASTER_URI=http://192.168.1.129:11311
     ping 192.168.1.129
 
-This is to set Pepper as Master (you have to change 192.168.1.129 to your Pepper IP), and verify to verify a correct connection. Finally, check Jetson's IP of ethernet connection (Go to 'Connection Information' in top-right corner and look for IP Address in the ethernet connection, it should be something like 10.42.0.13) and with this IP execute:
+This is to set Pepper as Master (you have to change 192.168.1.129 to your Pepper IP), and to verify a correct connection. Finally, check Jetson's IP of ethernet connection (Go to 'Connection Information' in top-right corner and look for IP Address in the ethernet connection, it should be something like 10.42.0.13) and with this IP execute:
 
     export ROS_IP=10.42.0.13  
 
@@ -241,7 +241,7 @@ And you should se something like:
 
 ## Configuration of Jetson with Pepper robot (direct Ethernet connection)
 
-![Pepper via wi-fi to notebook, which is connected through ethernet to Jetson.](darknet_ros/doc/pnj.png)
+![Pepper via wi-fi to notebook, which is connected through ethernet to Jetson.](darknet_ros/doc/pj.png)
 
 
 After configuring 'ros.yalm' camera reading topic to listen to Pepper's camera, create a ethernet connection with a 'Shared to other computers' method (options found in IPv4 Settings). Then connect Jetson card via ethernet to the computer connected to Pepper. 
@@ -250,12 +250,12 @@ After configuring 'ros.yalm' camera reading topic to listen to Pepper's camera, 
 
 On a terminal in the Jetson card, type the following:
 
-    export ROS_MASTER_URI=http://192.168.1.129:11311
-    ping 192.168.1.129
+    export ROS_MASTER_URI=http://10.42.0.67:11311
+    ping 10.42.0.67
 
-This is to set Pepper as Master (you have to change 192.168.1.129 to your Pepper IP), and verify to verify a correct connection. Finally, check Jetson's IP of ethernet connection (Go to 'Connection Information' in top-right corner and look for IP Address in the ethernet connection, it should be something like 10.42.0.13) and with this IP execute:
+This is to set Pepper as Master (you have to change 10.42.0.67 to your Pepper IP), and to verify a correct connection. Finally, check Jetson's IP of Ethernet connection (Go to 'Connection Information' in top-right corner and look for IP Address in the ethernet connection, it should be something like 10.42.0.1) and with this IP execute:
 
-    export ROS_IP=10.42.0.13  
+    export ROS_IP=10.42.0.1  
 
 You need to have in mind that every time you open a new terminal, you have to export both IPs.
 
@@ -263,6 +263,10 @@ To check that both IPs are setted, type:
 
     echo $ROS_IP
     echo $ROS_MASTER_URI
+
+### Pepper Configuration
+
+Because ROS driver is configured to stablish a connection through a specific network with Pepper, the kind of conection must be specified in the `maqui.launch` file (the one that starts all ROS systems in Pepper). The default connection is set to `wlan0`, and must be changed to `eth0`, to stablish an Ethernet link.  
 
 ### Launch
 
@@ -279,5 +283,13 @@ And you should se something like:
 ![YOLO running on Jetson with Pepper camera.](darknet_ros/doc/yo.png)
 
 **Warning: if an error rises when launching darknet_ros, it's probable that yout Jetson is running low on resources. Close every other procces (like web browsers for example) and try again**
+
+### Detection Information
+
+The rosnode `bounding_boxes`, is publishing the information of each detection, codified as 2 point from corners of each detection Bounding Box, and it's respective class. To see what's being published execute the next command:
+
+	rostopic echo /darknet_ros/bounding_boxes
+
+To use this information just subscribe to this node and use it's detection info.
 
 
