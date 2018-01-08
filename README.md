@@ -239,3 +239,45 @@ And you should se something like:
 
 **Warning: if an error rises when launching darknet_ros, it's probable that yout Jetson is running low on resources. Close every other procces (like web browsers for example) and try again**
 
+## Configuration of Jetson with Pepper robot (direct Ethernet connection)
+
+![Pepper via wi-fi to notebook, which is connected through ethernet to Jetson.](darknet_ros/doc/pnj.png)
+
+
+After configuring 'ros.yalm' camera reading topic to listen to Pepper's camera, create a ethernet connection with a 'Shared to other computers' method (options found in IPv4 Settings). Then connect Jetson card via ethernet to the computer connected to Pepper. 
+
+### ROS Network Configuration
+
+On a terminal in the Jetson card, type the following:
+
+    export ROS_MASTER_URI=http://192.168.1.129:11311
+    ping 192.168.1.129
+
+This is to set Pepper as Master (you have to change 192.168.1.129 to your Pepper IP), and verify to verify a correct connection. Finally, check Jetson's IP of ethernet connection (Go to 'Connection Information' in top-right corner and look for IP Address in the ethernet connection, it should be something like 10.42.0.13) and with this IP execute:
+
+    export ROS_IP=10.42.0.13  
+
+You need to have in mind that every time you open a new terminal, you have to export both IPs.
+
+To check that both IPs are setted, type:
+
+    echo $ROS_IP
+    echo $ROS_MASTER_URI
+
+### Launch
+
+Now you can open a terminal in Pepper, connecting to it via ssh (simething like ssh nao@192.168.1.129) and make a full Pepper launch
+
+    roslaunch maqui_bringup maqui.launch 
+
+After, from Jetson card you can launch YOLO
+
+    roslaunch darknet_ros darknet_ros.launch 
+
+And you should se something like:
+
+![YOLO running on Jetson with Pepper camera.](darknet_ros/doc/yo.png)
+
+**Warning: if an error rises when launching darknet_ros, it's probable that yout Jetson is running low on resources. Close every other procces (like web browsers for example) and try again**
+
+
