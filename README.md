@@ -34,7 +34,15 @@ In order to install darknet_ros, clone the latest version from this repository i
     git checkout pepper
     cd ../
 
-To maximize performance, make sure to build in *Release* mode. You can specify the build type by setting
+Small modifications must be done to darknet files, in order to grant compatibility with Pepper. First, go to `darknet/include/darknet.h` and comment code line 103 as:
+
+    //typedef struct network network;
+
+Second, go to `darknet/src/utils.c` and comment code line 16 as:
+
+    //    clock_gettime(CLOCK_REALTIME, &now);
+
+Now, you can start building. To maximize performance, make sure to build in *Release* mode. You can specify the build type by setting
 
     catkin_make -DCMAKE_BUILD_TYPE=Release
 
@@ -73,7 +81,7 @@ Then in the launch file you have to point to your new config file in the line:
 
     <rosparam command="load" ns="darknet_ros" file="$(find darknet_ros)/config/your_config_file.yaml"/>
 
-By default tiny-yolo-voc.yalm is set, and there is a cfg and a yalm to an arquitecture that it's lighter than yolo, and can detectect only person class if trained.
+By default `tiny-yolo-voc.yalm` is set, and there is a cfg and a yalm to an arquitecture that it's lighter than yolo, and can detectect only person class if trained.
 
 
 ## Basic Usage
