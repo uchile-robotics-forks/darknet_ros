@@ -74,7 +74,15 @@ In order to install darknet_ros, clone the latest version from this repository i
     git checkout jetson
     cd ../
 
-To maximize performance, make sure to build in *Release* mode. You can specify the build type by setting
+Small modifications must be done to darknet files, in order to grant compatibility with Jetson. First, go to `darknet/include/darknet.h` and comment code line 103 as:
+
+    //typedef struct network network;
+
+Second, go to `darknet/src/utils.c` and comment code line 16 as:
+
+    //    clock_gettime(CLOCK_REALTIME, &now);
+
+Now, you can start building. To maximize performance, make sure to build in *Release* mode. You can specify the build type by setting
 
     catkin_make -DCMAKE_BUILD_TYPE=Release
 
